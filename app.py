@@ -16,7 +16,7 @@ DBPORT = int(os.environ.get("DBPORT")) or "3306"
 AWS_BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME") or "group2-project"
 IMAGE_NAME = os.environ.get("IMAGE_NAME") or "images.jpg"
 GROUP_NAME = os.environ.get("GROUP_NAME") or "Group2"
-GROUP_SLOGAN = os.environ.get("GROUP_SLOGAN") or "Keep Trying Until You Succeed"
+GROUP_SLOGAN = os.environ.get("GROUP_SLOGAN") or "Keep Trying Until You Succeed!!!"
 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
