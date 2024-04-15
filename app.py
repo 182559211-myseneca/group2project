@@ -12,11 +12,11 @@ DBHOST = os.environ.get("DBHOST") or "localhost"
 DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
-DBPORT = int(os.environ.get("DBPORT")) or "3306"
-AWS_BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME") or "group2-project"
-IMAGE_NAME = os.environ.get("IMAGE_NAME") or "images.jpg"
+DBPORT = int(os.environ.get("DBPORT", "3306"))
+AWS_BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME") or "clo800projectbucket"
+IMAGE_NAME = os.environ.get("IMAGE_NAME") or "images3.jpg"
 GROUP_NAME = os.environ.get("GROUP_NAME") or "Group2"
-GROUP_SLOGAN = os.environ.get("GROUP_SLOGAN") or "Keep Trying Until You Succeed!!!"
+GROUP_SLOGAN = os.environ.get("GROUP_SLOGAN") or "Keep Trying Until You Succeed"
 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
@@ -31,13 +31,17 @@ output = {}
 table = 'employee';
 
 def download_image(bucket, image):
-    if not os.path.exists('static'):
-        os.makedirs('static')
-    output_file = 'static/background.jpg'
-    print(bucket, image)
-    s3 = boto3.resource('s3')
-    s3.Bucket(bucket).download_file(image, output_file)
-    return output_file
+    try:
+        if not os.path.exists('static'):
+            os.makedirs('static')
+        output_file = 'static/background.jpg'
+        print(bucket, image)
+        s3 = boto3.resource('s3')
+        s3.Bucket(bucket).download_file(image, output_file)
+        return output_file
+    except Exception as e:
+            print("Error downloading image:", e)
+            return None
 
 @app.route("/download_image", methods=['GET', 'POST'])
 def download_image_route():
